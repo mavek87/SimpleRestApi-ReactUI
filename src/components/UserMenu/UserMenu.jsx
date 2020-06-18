@@ -107,12 +107,13 @@ export default class UserMenu extends Component {
       return response.json();
     }).then(data => {
       alert(`Hai inserito l'utente ${username}`);
-      this.setState({user: '', age: 0, isCreateModeOn: false, isEditModeOn: false});
+      this.setState({user: '', age: 0});
       this.getUsersFromApi();
     }).catch(err => {
       alert("Errore durante l'inserimento dell'utente");
-      this.setState({isCreateModeOn: false, isEditModeOn: false});
       console.log(err);
+    }).finally(() => {
+      this.setState({isCreateModeOn: false, isEditModeOn: false});
     }); 
   }
 
