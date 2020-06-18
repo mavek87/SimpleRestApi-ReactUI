@@ -1,0 +1,15 @@
+.InputBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.InputBlock label {
+  margin-bottom: 8px;
+}
+
+.InputBlock input {
+  width: 200px;
+  height: 25px;
+  padding: 0 8px 0 8px;
+}

@@ -1,0 +1,11 @@
+.Dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Dialog button {
+  width: 100px;
+  height: 30px;
+}
