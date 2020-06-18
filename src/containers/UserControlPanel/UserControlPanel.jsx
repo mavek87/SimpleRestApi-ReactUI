@@ -6,8 +6,8 @@ const UserControlPanel = (props) => {
   const modifyOn = props.selected.length === 1;
   return (
     <div className={styles.UserControlPanel}>
-      <button>Create</button>
-      <button disabled={!modifyOn}>Modify</button>
+      <button onClick={props.onCreate}>Create</button>
+      <button disabled={!modifyOn} onClick={props.onEdit}>Modify</button>
       <button disabled={!removeOn} onClick={props.onRemove}>Remove</button>
     </div>
   );

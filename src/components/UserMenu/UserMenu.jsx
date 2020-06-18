@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import UserList from '../../containers/UserList/UserList';
 import UserControlPanel from '../../containers/UserControlPanel/UserControlPanel'
-import CreateUserDialog from '../../containers/Dialog/CreateUserDialog/CreateUserDialog';
-import ModifyUserDialog from '../../containers/Dialog/ModifyUserDialog/ModifyUserDialog';
+import CreateUserModal from '../../containers/Modal/CreateUserModal/CreateUserModal';
+import EditUserModal from '../../containers/Modal/EditUserModal/EditUserModal';
 
 const SERVER_URL = 'http://localhost:8899/';
 const API_USERS = 'api/users';
@@ -19,7 +19,9 @@ export default class UserMenu extends Component {
     user: '',
     age: 0,
     selectedUsersIds: [],
-    users: []
+    users: [],
+    isCreateModeOn: false,
+    isEditModeOn: false
   }
 
   // Utils
@@ -33,6 +35,22 @@ export default class UserMenu extends Component {
   } 
 
   // Handlers
+
+  createModeHandler = () => {
+    this.setState({isCreateModeOn: true});
+  } 
+  
+  cancelCreateModeHandler = () => {
+    this.setState({isCreateModeOn: false});
+  }
+
+  editModeHandler = () => {
+    this.setState({isEditModeOn: true});
+  } 
+  
+  cancelEditModeHandler = () => {
+    this.setState({isEditModeOn: false});
+  }
 
   onChangeUserSelectionHandler = (selectedUserId, event) => {
     let selectedUsersIds = this.state.selectedUsersIds;
@@ -89,10 +107,11 @@ export default class UserMenu extends Component {
       return response.json();
     }).then(data => {
       alert(`Hai inserito l'utente ${username}`);
-      this.setState({user: '', age: 0});
+      this.setState({user: '', age: 0, isCreateModeOn: false, isEditModeOn: false});
       this.getUsersFromApi();
     }).catch(err => {
       alert("Errore durante l'inserimento dell'utente");
+      this.setState({isCreateModeOn: false, isEditModeOn: false});
       console.log(err);
     }); 
   }
@@ -142,21 +161,27 @@ export default class UserMenu extends Component {
         <br/>
         <UserControlPanel 
           selected={this.state.selectedUsersIds} 
+          onCreate={this.createModeHandler}
+          onEdit={this.editModeHandler}
           onRemove={this.deleteUserHandler} />
         <br/>
-        <CreateUserDialog 
+        <CreateUserModal
+          show={this.state.isCreateModeOn}
+          modalClosed={this.cancelEditModeHandler}
           name={this.state.user}
-          age={this.state.age} 
           onChangeName={this.editUserNameHandler}
+          age={this.state.age} 
           onChangeAge={this.editUserAgeHandler}
-          onClick={this.saveUserHandler}
+          onSave={this.saveUserHandler}
         />
-        <ModifyUserDialog 
+        <EditUserModal
+          show={this.state.isEditModeOn}
+          modalClosed={this.cancelEditModeHandler}
           name={this.state.user}
-          age={this.state.age} 
           onChangeName={this.editUserNameHandler}
+          age={this.state.age} 
           onChangeAge={this.editUserAgeHandler}
-          onClick={this.saveUserHandler}
+          onSave={this.saveUserHandler}
         />
       </>
     );
