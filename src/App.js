@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import './App.css';
-import UserMenu from './components/UserMenu/UserMenu';
+import UserMenuComponent from './components/UserMenu/UserMenuComponent';
 
 export default class App extends Component {
   
   render() {
     return (
       <main className='App'>
-        <UserMenu />
+        <UserMenuComponent />
       </main>
     )}
 }
